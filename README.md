@@ -116,10 +116,10 @@ NOP
 ISUB R4, R1, R2
 IMUL R5, R1, R2
 IDIV R6, R1, R2
+NOP
+NOP
+NOP
 ST R3, [3000]
-NOP
-NOP
-NOP
 ST R4, [4000]
 NOP
 NOP
@@ -143,6 +143,49 @@ NOP
 ST R6, [6000]
 
 Total clock cycles: 40
+ 
+ 
+Functional Units Execution:
+   |       ADD       |       MUL       |       DIV       |   FADD   |   FMUL   |   FDIV   |    AND     | OR  |    XOR     |    NOT     |      MEM      |
+ 1 |                 |                 |                 |          |          |          |            |     |            |            | LD R1, [1000] |
+ 2 |                 |                 |                 |          |          |          |            |     |            |            | LD R2, [2000] |
+ 3 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+ 4 | IADD R3, R1, R2 |                 |                 |          |          |          |            |     |            |            |               |
+ 5 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+ 6 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+ 7 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+ 8 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+ 9 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+10 | ISUB R4, R1, R2 |                 |                 |          |          |          |            |     |            |            |               |
+11 |                 | IMUL R5, R1, R2 |                 |          |          |          |            |     |            |            |               |
+12 |                 |                 | IDIV R6, R1, R2 |          |          |          |            |     |            |            |               |
+13 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+14 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+15 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+16 |                 |                 |                 |          |          |          |            |     |            |            | ST R3, [3000] |
+17 |                 |                 |                 |          |          |          |            |     |            |            | ST R4, [4000] |
+18 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+19 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+20 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+21 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+22 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+23 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+24 |                 |                 |                 |          |          |          |            |     |            |            | ST R5, [5000] |
+25 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+26 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+27 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+28 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+29 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+30 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+31 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+32 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+33 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+34 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+35 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+36 |       NOP       |       NOP       |       NOP       |   NOP    |   NOP    |   NOP    |    NOP     | NOP |    NOP     |    NOP     |      NOP      |
+37 |                 |                 |                 |          |          |          |            |     |            |            | ST R6, [6000] |
+ 
+ 
 Clock Cycle Execution:
                      |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |  10   |  11   |  12   |  13   |  14   |  15   |  16   |  17   |  18   |  19   |  20   |  21   |  22   |  23   |  24   |  25   |  26   |  27   |  28   |  29   |  30   |  31   |  32   |  33   |  34   |  35   |  36   |  37   |  38   |  39   |  40   |
 1: LD R1, [1000]    |  IF   |  ID   |  MEM  |  WB   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
@@ -157,10 +200,10 @@ Clock Cycle Execution:
 10: ISUB R4, R1, R2 |       |       |       |       |       |       |       |       |       |  IF   |  ID   |  ADD  |  ADD  |  ADD  |  ADD  |  ADD  |  ADD  |  WB   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
 11: IMUL R5, R1, R2 |       |       |       |       |       |       |       |       |       |       |  IF   |  ID   |  MUL  |  MUL  |  MUL  |  MUL  |  MUL  |  MUL  |  MUL  |  MUL  |  MUL  |  MUL  |  MUL  |  MUL  |  WB   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
 12: IDIV R6, R1, R2 |       |       |       |       |       |       |       |       |       |       |       |  IF   |  ID   |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  DIV  |  WB   |       |       |
-13: ST R3, [3000]   |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |  ID   |  MEM  |  WB   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+13: NOP             |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
 14: NOP             |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
 15: NOP             |       |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
-16: NOP             |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+16: ST R3, [3000]   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |  ID   |  MEM  |  WB   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
 17: ST R4, [4000]   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |  ID   |  MEM  |  WB   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
 18: NOP             |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
 19: NOP             |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |

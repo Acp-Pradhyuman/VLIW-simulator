@@ -226,3 +226,5 @@ Clock Cycle Execution:
 36: NOP             |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |       |       |       |       |
 37: ST R6, [6000]   |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |  IF   |  ID   |  MEM  |  WB   |
 ```
+
+![Pipeline Execution Timeline showing instruction parallelism](docs/images/gantt chart.png)

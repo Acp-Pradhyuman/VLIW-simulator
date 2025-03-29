@@ -1,3 +1,4 @@
+
 # VLIW Processor Simulation
 
 ## Introduction
@@ -228,3 +229,160 @@ Clock Cycle Execution:
 ```
 
 ![Pipeline Execution Timeline showing instruction parallelism](docs/images/gantt_chart.png)
+
+## Advanced VLIW with Code Motion Optimization
+
+### What is Code Motion?
+Code motion is a compiler optimization technique that **reorders instructions** to maximize parallel execution while preserving program correctness. In VLIW architectures, it enables:
+
+- 🚀 **Parallel execution** of independent instructions
+- ⏳ **Reduced stalls** by moving instructions across basic blocks
+- 🔄 **Better resource utilization** of functional units
+- 📉 **Fewer NOPs** inserted for hazard resolution
+
+### How Our Advanced VLIW Works
+
+#### Topological Sorting Implementation
+We use **Kahn's algorithm** to analyze and reorder instructions:
+
+```python
+def topological_sort_instructions(instructions):
+    # 1. Build dependency graph tracking:
+    #    - RAW hazards (register dependencies)
+    #    - WAW hazards (register conflicts)
+    # 2. Identify independent instruction groups
+    # 3. Return instructions grouped by dependency levels
+```
+## Dependency Analysis in Action
+
+### Example Program Transformation
+
+**Original Code:**
+```assembly
+LD R1, [1000]
+LD R2, [2000]
+IADD R3, R1, R2
+ST R3, [3000]
+ISUB R4, R1, R2
+ST R4, [4000]
+IMUL R5, R1, R2
+ST R5, [5000]
+IDIV R6, R1, R2
+ST R6, [6000]
+```
+
+## Optimized Instruction Schedule
+
+### Parallel Execution Groups
+
+### Level 0: Memory Loads (Parallel)
+```assembly
+LD R1, [1000]  ; Load from address 1000 → R1
+LD R2, [2000]  ; Load from address 2000 → R2
+```
+#### Key Characteristics:
+- ✅ **Parallel execution**: Both loads can execute simultaneously  
+- 🔗 **No dependencies**: Independent register targets (R1 vs R2)  
+- 🧠 **Memory controller**: Handles concurrent memory access  
+- ⏱ **Latency**: 1 cycle each (pipelined memory operations)  
+
+### Level 1: Arithmetic Operations (Parallel Execution)
+```assembly
+IADD R3, R1, R2  ; R3 = R1 + R2
+ISUB R4, R1, R2  ; R4 = R1 - R2
+IMUL R5, R1, R2  ; R5 = R1 * R2 
+IDIV R6, R1, R2  ; R6 = R1 / R2
+```
+## Parallel Execution Features
+
+### Register Usage
+| Aspect | Description |
+|--------|-------------|
+| Sources | All use (R1, R2) |
+| Destinations | Unique targets (R3-R6) |
+
+### Functional Units
+- 1 Integer ALU (IADD/ISUB)
+- 1 Multiplier (IMUL) 
+- 1 Divider (IDIV)
+
+### Operation Latencies
+- ADD/SUB: 6 cycles
+- MUL: 12 cycles
+- DIV: 24 cycles
+
+## Level 2: Memory Stores (Sequential Execution)
+```assembly
+ST R3, [3000]  ; Store R3 → address 3000
+ST R4, [4000]  ; Store R4 → address 4000
+ST R5, [5000]  ; Store R5 → address 5000
+ST R6, [6000]  ; Store R6 → address 6000
+```
+## Execution Constraints
+
+### Data Dependencies
+- 🔄 Each store must wait for its specific arithmetic result  
+  *Example:* `ST R3` waits for `IADD R3` completion
+
+### Memory System
+- 🚦 **Bus contention** requires serialized stores  
+- 🏦 **Non-conflicting addresses** prevent bank conflicts  
+  (3000, 4000, 5000, 6000 are in different banks)
+
+### Scheduling Policy
+- 📜 Stores execute in original program order  
+- 🔒 No reordering to maintain memory consistency  
+- ⏳ Stores are issued as soon as:  
+  - Data is available (RAW resolved)  
+  - Memory bus is free (structural hazard resolved)
+
+  ## Performance Achievements
+
+### Cycle Count Improvement
+| Implementation | Clock Cycles | Improvement |
+|----------------|-------------:|------------:|
+| Basic VLIW     | 62 cycles    | Baseline    |
+| Advanced VLIW  | **40 cycles** | **35.5% faster** |
+
+### NOP Reduction
+| Implementation | NOPs Inserted | Reduction |
+|----------------|--------------:|----------:|
+| Basic VLIW     | 49 NOPs       | Baseline  |
+| Advanced VLIW  | **27 NOPs**   | **44.9% fewer** |
+
+### Key Optimizations That Enabled These Gains:
+1. **Topological Scheduling**:
+   - Groups independent instructions into parallel packets
+   - Enables simultaneous execution of arithmetic operations
+
+2. **Smart NOP Insertion**:
+   - Only inserts delays for true dependencies
+   - Eliminates unnecessary pipeline bubbles
+
+3. **Memory Access Optimization**:
+   - Overlaps loads with computation
+   - Serializes stores only when required
+
+4. **Resource Utilization**:
+   - Better functional unit balancing
+   - Maximizes parallel execution opportunities
+
+## Architectural Advantage
+
+💡 **Key Insight**:  
+*The advanced VLIW achieves these improvements through static compiler analysis rather than complex hardware, demonstrating the power of:*
+
+- **Compiler-Driven Optimization**: All scheduling decisions made at compile-time
+- **Simplified Hardware**: No need for dynamic scheduling logic
+- **Deterministic Execution**: Predictable performance through static analysis
+- **Energy Efficiency**: Reduced hardware complexity lowers power consumption
+
+> "This approach shifts the complexity from runtime hardware to compile-time software, enabling better performance with simpler processor designs."
+
+### Comparison with Traditional Architectures
+| Feature        | Conventional CPU | Advanced VLIW |
+|---------------|------------------|---------------|
+| Scheduling    | Hardware (OoO)   | Compiler      |
+| Hazards       | Runtime detection | Compile-time resolution |
+| Power Usage   | Higher           | Lower         |
+| Predictability | Variable        | Deterministic |
